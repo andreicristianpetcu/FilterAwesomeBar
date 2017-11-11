@@ -1,0 +1,271 @@
+[
+    {
+       "id":"root________",
+       "title":"",
+       "index":0,
+       "dateAdded":1479429737223,
+       "type":"folder",
+       "dateGroupModified":1510400958433,
+       "children":[
+          {
+             "id":"menu________",
+             "title":"Bookmarks Menu",
+             "index":0,
+             "dateAdded":1479429737223,
+             "type":"folder",
+             "parentId":"root________",
+             "dateGroupModified":1510400835461,
+             "children":[
+                {
+                   "id":"BfDj-W-s4IrU",
+                   "title":"Recent Tags",
+                   "index":0,
+                   "dateAdded":1479429737579,
+                   "type":"bookmark",
+                   "url":"place:type=6&sort=14&maxResults=10",
+                   "parentId":"menu________"
+                },
+                {
+                   "id":"911aHQ39pizY",
+                   "title":"Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch",
+                   "index":1,
+                   "dateAdded":1494163621320,
+                   "type":"bookmark",
+                   "url":"http://activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica",
+                   "parentId":"menu________"
+                },
+                {
+                   "id":"jYXd8B2wb4CH",
+                   "title":"VIDEO UPDATE Alegeri prezidentiale in Franta. 28,23% dintre francezi si-au exprimat, pana la ora pranzului, optiunea pentru Macron sau Le Pen - International - HotNews.ro",
+                   "index":2,
+                   "dateAdded":1494163623953,
+                   "type":"bookmark",
+                   "url":"http://www.hotnews.ro/stiri-international-21751925-alegeri-prezidentiale-franta-francezii-sunt-chemati-isi-acorde-votul-deciziv-pentru-viitorul-presedinte-emmanuel-macron-sau-marine-pen.htm",
+                   "parentId":"menu________"
+                }
+             ]
+          },
+          {
+             "id":"toolbar_____",
+             "title":"Bookmarks Toolbar",
+             "index":1,
+             "dateAdded":1479429737223,
+             "type":"folder",
+             "parentId":"root________",
+             "dateGroupModified":1510400958433,
+             "children":[
+                {
+                   "id":"MY7P9hgWomTk",
+                   "title":"Most Visited",
+                   "index":0,
+                   "dateAdded":1479429737555,
+                   "type":"bookmark",
+                   "url":"place:sort=8&maxResults=10",
+                   "parentId":"toolbar_____"
+                },
+                {
+                   "id":"r6Rc1d8sBhn1",
+                   "title":"Fedora Documentation",
+                   "index":1,
+                   "dateAdded":1158286602000,
+                   "type":"bookmark",
+                   "url":"https://docs.fedoraproject.org/",
+                   "parentId":"toolbar_____"
+                },
+                {
+                   "id":"MJIFeS0drAX-",
+                   "title":"Fedora Project",
+                   "index":2,
+                   "dateAdded":1130967903000,
+                   "type":"folder",
+                   "parentId":"toolbar_____",
+                   "dateGroupModified":1510400862852,
+                   "children":[
+                      {
+                         "id":"991Qx3VxqmYE",
+                         "title":"Ask Fedora: Community Knowledge Base and Support Forum",
+                         "index":0,
+                         "dateAdded":1351508148000,
+                         "type":"bookmark",
+                         "url":"https://ask.fedoraproject.org/",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"LAbWhlXFRhiR",
+                         "title":"Fedora Magazine",
+                         "index":1,
+                         "dateAdded":1367341224000,
+                         "type":"bookmark",
+                         "url":"http://fedoramagazine.org/",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"KGlS6oQHQMwo",
+                         "title":"Planet Fedora",
+                         "index":2,
+                         "dateAdded":1176675201000,
+                         "type":"bookmark",
+                         "url":"http://planet.fedoraproject.org/",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"4nQwE0_YfPQP",
+                         "title":"Fedora Community Blog",
+                         "index":3,
+                         "dateAdded":1463690518000,
+                         "type":"bookmark",
+                         "url":"https://communityblog.fedoraproject.org/",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"MnSHgxNdpyl2",
+                         "title":"Fedora Forum",
+                         "index":4,
+                         "dateAdded":1130967896000,
+                         "type":"bookmark",
+                         "url":"https://forums.fedoraforum.org/",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"E_cEOT54lDPb",
+                         "title":"Join the Fedora Project",
+                         "index":5,
+                         "dateAdded":1241209418000,
+                         "type":"bookmark",
+                         "url":"https://fedoraproject.org/wiki/Join",
+                         "parentId":"MJIFeS0drAX-"
+                      },
+                      {
+                         "id":"G6u2YimdXWQ3",
+                         "title":"Release Notes",
+                         "index":6,
+                         "dateAdded":1351508092000,
+                         "type":"bookmark",
+                         "url":"file:///usr/share/doc/fedora-release-notes/index.html",
+                         "parentId":"MJIFeS0drAX-"
+                      }
+                   ]
+                },
+                {
+                   "id":"AnMGiVO95YG0",
+                   "title":"Red Hat",
+                   "index":3,
+                   "dateAdded":1176674113000,
+                   "type":"folder",
+                   "parentId":"toolbar_____",
+                   "dateGroupModified":1510400958433,
+                   "children":[
+                      {
+                         "id":"vvAs3bUuIX7F",
+                         "title":"JBoss",
+                         "index":0,
+                         "dateAdded":1176674189000,
+                         "type":"bookmark",
+                         "url":"https://www.jboss.org/",
+                         "parentId":"AnMGiVO95YG0"
+                      },
+                      {
+                         "id":"bcmhKEFCuLKG",
+                         "title":"OpenSource.com",
+                         "index":1,
+                         "dateAdded":1269287471000,
+                         "type":"bookmark",
+                         "url":"https://opensource.com/",
+                         "parentId":"AnMGiVO95YG0"
+                      },
+                      {
+                         "id":"Vs5eZ5u3uvmZ",
+                         "title":"The Open Source Way",
+                         "index":2,
+                         "dateAdded":1269287471000,
+                         "type":"bookmark",
+                         "url":"https://www.theopensourceway.org/",
+                         "parentId":"AnMGiVO95YG0"
+                      }
+                   ]
+                },
+                {
+                   "id":"B9l1bBHxqZZX",
+                   "title":"Free Content",
+                   "index":4,
+                   "dateAdded":1176674388000,
+                   "type":"folder",
+                   "parentId":"toolbar_____",
+                   "dateGroupModified":1241209425000,
+                   "children":[
+                      {
+                         "id":"HdJz9pF3IzjE",
+                         "title":"Wikipedia",
+                         "index":0,
+                         "dateAdded":1176674401000,
+                         "type":"bookmark",
+                         "url":"https://www.wikipedia.org/",
+                         "parentId":"B9l1bBHxqZZX"
+                      },
+                      {
+                         "id":"ZqjJTZQqL5S2",
+                         "title":"LibriVox",
+                         "index":1,
+                         "dateAdded":1241209006000,
+                         "type":"bookmark",
+                         "url":"https://librivox.org/",
+                         "parentId":"B9l1bBHxqZZX"
+                      },
+                      {
+                         "id":"dmgR7ZaNVlnu",
+                         "title":"Open Clip Art",
+                         "index":2,
+                         "dateAdded":1269287471000,
+                         "type":"bookmark",
+                         "url":"https://www.openclipart.org/",
+                         "parentId":"B9l1bBHxqZZX"
+                      },
+                      {
+                         "id":"0wNknbB6MlAM",
+                         "title":"Free Sound",
+                         "index":3,
+                         "dateAdded":1269287471000,
+                         "type":"bookmark",
+                         "url":"https://www.freesound.org/",
+                         "parentId":"B9l1bBHxqZZX"
+                      },
+                      {
+                         "id":"Wh2pR4WKpsXc",
+                         "title":"Creative Commons",
+                         "index":4,
+                         "dateAdded":1176674776000,
+                         "type":"bookmark",
+                         "url":"https://creativecommons.org/",
+                         "parentId":"B9l1bBHxqZZX"
+                      }
+                   ]
+                }
+             ]
+          },
+          {
+             "id":"unfiled_____",
+             "title":"Other Bookmarks",
+             "index":3,
+             "dateAdded":1479429737223,
+             "type":"folder",
+             "parentId":"root________",
+             "dateGroupModified":1510400835461,
+             "children":[
+ 
+             ]
+          },
+          {
+             "id":"mobile______",
+             "title":"Marcaje mobile",
+             "index":4,
+             "dateAdded":1479431016218,
+             "type":"folder",
+             "parentId":"root________",
+             "dateGroupModified":1479431016218,
+             "children":[
+ 
+             ]
+          }
+       ]
+    }
+ ]

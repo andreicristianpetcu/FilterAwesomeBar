@@ -6,3 +6,6 @@ chrome.runtime.onInstalled.addListener((details) => {
 })
 
 console.log(`'Allo 'Allo! Event Page`)
+// console.log("helloObject");
+// window.mybackground = {hello: "background"};
+console.log(window.commonlib);
