@@ -6,4 +6,4 @@
 // })
 
 // console.log("helloObject");
-window.mybackground = {hello: "background"};
+// window.commonlib.runInBackground(browser);

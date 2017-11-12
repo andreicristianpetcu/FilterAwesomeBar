@@ -83,4 +83,20 @@ describe("Bookmarks processor", function () {
         expect(newBookmarkData.id).toEqual('911aHQ39pizY');
     });
 
+    fit("should register onInstall when runInBackground", function () {
+        var browserSpy = sinon.spy();
+
+        commonlib.runInBackground(browserSpy);
+
+        browserSpy.runtime.onInstalled.addListener.called();
+    });
+
+    fit("should register onInstall when ", function () {
+        var browserSpy = sinon.spy();
+
+        commonlib.runInBackground(browserSpy);
+
+        browserSpy.runtime.onInstalled.addListener.called();
+    });
+
 });

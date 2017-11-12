@@ -54,13 +54,13 @@ function generateNewBookmarkData(bookmarkData) {
     return newBookmarkData;
 }
 
-function onInstalled(api) {
-    api.runtime.onInstalled.addListener(function () {
-        
-    });
+function runInBackground(browser) {
+    // browser.runtime.onInstalled.addListener(function () {
+
+    // });
 }
 
 commonlib.extractBookmarks = extractBookmarks;
 commonlib.shouldProcessBookmark = shouldProcessBookmark;
 commonlib.generateNewBookmarkData = generateNewBookmarkData;
-commonlib.onInstalled = onInstalled;
+commonlib.runInBackground = runInBackground;
