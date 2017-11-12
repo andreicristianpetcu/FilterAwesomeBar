@@ -1,9 +1,9 @@
 // exports.helloObject = {hello: "world"};
 const commonlib = {};
 
-// if (window) {
-//     window.commonlib = commonlib;
-// }
+if (window) {
+    window.commonlib = commonlib;
+}
 // if (typeof exports !== 'undefined') {
 //     exports.commonlib = commonlib;
 // }
@@ -57,12 +57,23 @@ function generateNewBookmarkData(bookmarkData) {
 
 function runInBackground(browser) {
     browser.runtime.onInstalled.addListener(function () {
-        commonlib.processAllBookmarks();
+        browser.bookmarks.getTree().then(function (bookmarksTree) {
+            commonlib.processAllBookmarks(bookmarksTree);
+        });
     });
 }
 
-function processAllBookmarks(){
-    console.log("processAllBookmarks");
+function processAllBookmarks(bookmarksTree) {
+    console.log("bookmarksTree=" + bookmarksTree);
+    var extractedBookmarks = extractBookmarks(bookmarksTree);
+    console.log("extractedBookmarks=" + extractedBookmarks);
+    extractedBookmarks.forEach(function (newBookmarkData) {
+        browser.bookmarks.update(newBookmarkData.id, {
+            title: newBookmarkData.newTitle
+        }).then(function(){}, function(error){
+            console.log("error " + error);
+        });
+    });
 }
 
 commonlib.extractBookmarks = extractBookmarks;

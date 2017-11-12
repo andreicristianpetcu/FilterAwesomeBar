@@ -6,4 +6,6 @@
 // })
 
 // console.log("helloObject");
-// window.commonlib.runInBackground(browser);
+if (window.commonlib) {
+  window.commonlib.runInBackground(browser);
+}

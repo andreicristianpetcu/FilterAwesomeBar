@@ -44,13 +44,26 @@ describe("Bookmarks processor", function () {
     ];
 
     var browserSpy;
+    var commonlibSpy;
     beforeEach(function () {
         browserSpy = {
             runtime: {
                 onInstalled: {
                     addListener: sinon.spy()
                 }
+            },
+            bookmarks: {
+                getTree: sinon.stub(),
+                update: sinon.spy()
             }
+        };
+    });
+    afterEach(function () {
+        // browserSpy.runtime.onInstalled.addListener.restore();
+        // browserSpy.bookmarks.getTree.restore();
+        // browserSpy.bookmarks.update.restore();
+        if (commonlibSpy) {
+            commonlibSpy.restore();
         }
     });
 
@@ -100,16 +113,34 @@ describe("Bookmarks processor", function () {
         expect(browserSpy.runtime.onInstalled.addListener.called).toBeTruthy();
     });
 
-    it("should processAllBookmarks when runInBackground is called", function () {
-        var commonlibSpy = sinon.spy(commonlib, 'processAllBookmarks');
+    xit("should processAllBookmarks when runInBackground is called", function () {
+        var commonlibSpy = sinon.stub(commonlib, 'processAllBookmarks');
+        commonlibSpy.returns(Promise.resolve([]));
         commonlib.runInBackground(browserSpy);
-        console.log("called " + browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0]);
         var listenerFunction = browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0];
 
         listenerFunction();
 
         expect(commonlib.processAllBookmarks.called).toBeTruthy();
-        commonlibSpy.restore();
+    });
+
+    xit("should process the tree and update the bookmarks when processAllBookmarks", function () {
+        var bookmarkData = {
+            id: 'bookmark_id',
+            newTitle: 'my title ::: root'
+        };
+        var commonlibSpy = sinon.stub(commonlib, 'extractBookmarks');
+        var promise = new Promise();
+        promise.resolve([bookmarkData]);
+        commonlibSpy.returns(promise);
+        var dummyBookmarkTree = [{name: "the tree"}];
+
+        commonlib.processAllBookmarks(dummyBookmarkTree);
+
+        commonlibSpy.calledWith();
+        expect(browserSpy.bookmarks.update.calledWith(bookmarkData.id, {
+            title: 'my title ::: root'
+        })).toBeTruthy();
     });
 
 });
