@@ -43,9 +43,24 @@ describe("Bookmarks processor", function () {
         }
     ];
 
-    it("and so is a spec", function () {
+    it("should return leaf items", function () {
         var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
 
-        expect(extractedBookmarks.length).toBe(2);
+        expect(extractedBookmarks.length).toBe(1);
     });
+
+    it("should have correct fields", function () {
+        var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
+
+        expect(extractedBookmarks[0].id).toBe('911aHQ39pizY');
+    });
+
+    it("should not process 'place:' bookmarks", function () {
+        var shouldProccess = commonlib.shouldProcessBookmark({
+            "url": "place:type=6&sort=14&maxResults=10"
+        });
+
+        expect(shouldProccess).toBe(false);
+    });
+
 });
