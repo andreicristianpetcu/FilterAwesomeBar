@@ -6,7 +6,7 @@ module.exports = function(config) {
       ],
       browsers: ['PhantomJS'],
       // coverage reporter generates the coverage 
-      reporters: ['progress', 'coverage'],
+      reporters: ['progress', 'coverage', 'spec'],
       frameworks: ['jasmine', 'sinon'],
       preprocessors: {
         // source files, that you wanna generate coverage for 

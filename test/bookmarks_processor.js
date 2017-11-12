@@ -43,6 +43,17 @@ describe("Bookmarks processor", function () {
         }
     ];
 
+    var browserSpy;
+    beforeEach(function () {
+        browserSpy = {
+            runtime: {
+                onInstalled: {
+                    addListener: sinon.spy()
+                }
+            }
+        }
+    });
+
     it("should return leaf items", function () {
         var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
 
@@ -83,20 +94,22 @@ describe("Bookmarks processor", function () {
         expect(newBookmarkData.id).toEqual('911aHQ39pizY');
     });
 
-    fit("should register onInstall when runInBackground", function () {
-        var browserSpy = sinon.spy();
-
+    it("should register onInstall when runInBackground", function () {
         commonlib.runInBackground(browserSpy);
 
-        browserSpy.runtime.onInstalled.addListener.called();
+        expect(browserSpy.runtime.onInstalled.addListener.called).toBeTruthy();
     });
 
-    fit("should register onInstall when ", function () {
-        var browserSpy = sinon.spy();
-
+    it("should processAllBookmarks when runInBackground is called", function () {
+        var commonlibSpy = sinon.spy(commonlib, 'processAllBookmarks');
         commonlib.runInBackground(browserSpy);
+        console.log("called " + browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0]);
+        var listenerFunction = browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0];
 
-        browserSpy.runtime.onInstalled.addListener.called();
+        listenerFunction();
+
+        expect(commonlib.processAllBookmarks.called).toBeTruthy();
+        commonlibSpy.restore();
     });
 
 });

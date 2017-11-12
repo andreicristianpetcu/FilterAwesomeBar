@@ -17,3 +17,11 @@ gulp.task('test:watch', function (done) {
     singleRun: false
   }, done).start();
 })
+
+gulp.task('test:browsers', function (done) {
+  new Server({
+    configFile: __dirname + './../karma.conf.js',
+    browsers: ['Firefox', 'PhantomJS', 'Chrome'],
+    singleRun: false
+  }, done).start();
+})

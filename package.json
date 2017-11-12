@@ -61,6 +61,7 @@
     "karma-ng-html2js-preprocessor": "^1.0.0",
     "karma-phantomjs-launcher": "^1.0.4",
     "karma-sinon": "^1.0.5",
+    "karma-spec-reporter": "0.0.31",
     "mocha": "^4.0.1",
     "require-dir": "0.x.x",
     "sinon": "^4.1.2",

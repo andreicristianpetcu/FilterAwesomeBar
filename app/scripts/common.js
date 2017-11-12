@@ -1,12 +1,13 @@
 // exports.helloObject = {hello: "world"};
 const commonlib = {};
 
-if (window) {
-    window.commonlib = commonlib;
-}
-if (typeof exports !== 'undefined') {
-    exports.commonlib = commonlib;
-}
+// if (window) {
+//     window.commonlib = commonlib;
+// }
+// if (typeof exports !== 'undefined') {
+//     exports.commonlib = commonlib;
+// }
+
 function extractBookmarks(browserBookmarks, parents) {
     if (typeof parents === 'undefined') {
         parents = []
@@ -55,12 +56,17 @@ function generateNewBookmarkData(bookmarkData) {
 }
 
 function runInBackground(browser) {
-    // browser.runtime.onInstalled.addListener(function () {
+    browser.runtime.onInstalled.addListener(function () {
+        commonlib.processAllBookmarks();
+    });
+}
 
-    // });
+function processAllBookmarks(){
+    console.log("processAllBookmarks");
 }
 
 commonlib.extractBookmarks = extractBookmarks;
 commonlib.shouldProcessBookmark = shouldProcessBookmark;
 commonlib.generateNewBookmarkData = generateNewBookmarkData;
 commonlib.runInBackground = runInBackground;
+commonlib.processAllBookmarks = processAllBookmarks;
