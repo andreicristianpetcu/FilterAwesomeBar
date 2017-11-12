@@ -100,11 +100,13 @@ describe("Bookmarks processor", function () {
             parents: [
                 "root",
                 "Bookmarks Menu"
-            ]
+            ],
+            url: "http://activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica"
         });
 
         expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: root bookmarksmenu');
         expect(newBookmarkData.id).toEqual('911aHQ39pizY');
+        expect(newBookmarkData.url).toEqual('http://activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica');
     });
 
     it("should register onInstall when runInBackground", function () {

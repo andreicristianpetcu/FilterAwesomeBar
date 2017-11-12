@@ -49,7 +49,8 @@ function generateNewBookmarkData(bookmarkData) {
 
     const newBookmarkData = {
         id: bookmarkData.id,
-        newTitle: newTitle
+        newTitle: newTitle,
+        url: bookmarkData.url
     }
 
     return newBookmarkData;
@@ -69,7 +70,8 @@ function processAllBookmarks(bookmarksTree) {
     console.log("extractedBookmarks=" + extractedBookmarks);
     extractedBookmarks.forEach(function (newBookmarkData) {
         browser.bookmarks.update(newBookmarkData.id, {
-            title: newBookmarkData.newTitle
+            title: newBookmarkData.newTitle,
+            url: newBookmarkData.url
         }).then(function(){}, function(error){
             console.log("error " + error);
         });
