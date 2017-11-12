@@ -38,7 +38,7 @@ function shouldProcessBookmark(browserBookmark) {
     return browserBookmark.type === 'bookmark' && browserBookmark.url.indexOf('place:') === -1;
 }
 
-function generateNewBookmarkData(bookmarkData){
+function generateNewBookmarkData(bookmarkData) {
     const oldTitle = bookmarkData.title;
     var newTitle = oldTitle;
     newTitle = newTitle + " :::";
@@ -54,6 +54,13 @@ function generateNewBookmarkData(bookmarkData){
     return newBookmarkData;
 }
 
+function onInstalled(api) {
+    api.runtime.onInstalled.addListener(function () {
+        
+    });
+}
+
 commonlib.extractBookmarks = extractBookmarks;
 commonlib.shouldProcessBookmark = shouldProcessBookmark;
 commonlib.generateNewBookmarkData = generateNewBookmarkData;
+commonlib.onInstalled = onInstalled;
