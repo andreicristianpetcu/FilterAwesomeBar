@@ -7,20 +7,34 @@ if (window) {
 if (typeof exports !== 'undefined') {
     exports.commonlib = commonlib;
 }
-function extractBookmarks(browserBookmarks) {
+function extractBookmarks(browserBookmarks, parents) {
+    if (typeof parents === 'undefined') {
+        parents = []
+    }
     var returnedBookmars = [];
     browserBookmarks.forEach(function (browserBookmark) {
         if (shouldProcessBookmark(browserBookmark)) {
-            returnedBookmars.push({ id: browserBookmark.id });
+            returnedBookmars.push({
+                id: browserBookmark.id,
+                parents: parents.slice(0)
+            });
         } else if (browserBookmark.type === 'folder') {
-            const childBookmarks = extractBookmarks(browserBookmark.children);
+            var childParents = parents.slice(0);
+            var currentTitle;
+            if (browserBookmark.id === "root________") {
+                currentTitle = 'root';
+            } else {
+                currentTitle = browserBookmark.title;
+            }
+            childParents.push(currentTitle);
+            const childBookmarks = extractBookmarks(browserBookmark.children, childParents);
             Array.prototype.push.apply(returnedBookmars, childBookmarks);
         }
     }, this);
     return returnedBookmars;
 }
 
-function shouldProcessBookmark(browserBookmark){
+function shouldProcessBookmark(browserBookmark) {
     return browserBookmark.type === 'bookmark' && browserBookmark.url.indexOf('place:') === -1;
 }
 

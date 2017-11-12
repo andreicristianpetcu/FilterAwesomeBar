@@ -63,4 +63,10 @@ describe("Bookmarks processor", function () {
         expect(shouldProccess).toBe(false);
     });
 
+    it("should not process 'place:' bookmarks", function () {
+        var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
+
+        expect(extractedBookmarks[0].parents).toEqual(['root', 'Bookmarks Menu']);
+    });
+
 });
