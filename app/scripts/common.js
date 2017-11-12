@@ -4,6 +4,6 @@ const commonlib = {hello: "world"};
 if(window){
     window.commonlib = commonlib;
 }
-if(exports){
-    exports.commonlib = commonlib;
-}
+// if(exports !== undefined){
+//     exports.commonlib = commonlib;
+// }
