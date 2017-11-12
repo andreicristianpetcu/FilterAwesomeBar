@@ -4,7 +4,7 @@ module.exports = function(config) {
         'app/scripts/**/*.js',
         'test/**/*.js'
       ],
-   
+      browsers: ['PhantomJS'],
       // coverage reporter generates the coverage 
       reporters: ['progress', 'coverage'],
       frameworks: ['jasmine'],

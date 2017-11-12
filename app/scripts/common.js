@@ -1,5 +1,5 @@
 // exports.helloObject = {hello: "world"};
-console.log(`'Allo 'Allo! Common.js`)
+console.log('test from common')
 const commonlib = {hello: "world"};
 if(window){
     window.commonlib = commonlib;
