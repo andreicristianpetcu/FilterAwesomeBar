@@ -5,7 +5,5 @@
 //   console.log('previousVersion', details.previousVersion)
 // })
 
-console.log('background page test')
 // console.log("helloObject");
-// window.mybackground = {hello: "background"};
-console.log(window.commonlib);
+window.mybackground = {hello: "background"};
