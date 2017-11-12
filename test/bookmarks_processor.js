@@ -69,4 +69,18 @@ describe("Bookmarks processor", function () {
         expect(extractedBookmarks[0].parents).toEqual(['root', 'Bookmarks Menu']);
     });
 
+    it("generate a new title containing the folders", function () {
+        var newBookmarkData = commonlib.generateNewBookmarkData({
+            id: "911aHQ39pizY",
+            title: "Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch",
+            parents: [
+                "root",
+                "Bookmarks Menu"
+            ]
+        });
+
+        expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: root bookmarksmenu');
+        expect(newBookmarkData.id).toEqual('911aHQ39pizY');
+    });
+
 });
