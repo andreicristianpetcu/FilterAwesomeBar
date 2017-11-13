@@ -17,7 +17,9 @@ function extractBookmarks(browserBookmarks, parents) {
         if (shouldProcessBookmark(browserBookmark)) {
             returnedBookmars.push({
                 id: browserBookmark.id,
-                parents: parents.slice(0)
+                parents: parents.slice(0),
+                url: browserBookmark.url,
+                oldTitle: browserBookmark.title
             });
         } else if (browserBookmark.type === 'folder') {
             var childParents = parents.slice(0);
@@ -40,9 +42,7 @@ function shouldProcessBookmark(browserBookmark) {
 }
 
 function generateNewBookmarkData(bookmarkData) {
-    const oldTitle = bookmarkData.title;
-    var newTitle = oldTitle;
-    newTitle = newTitle + " :::";
+    var newTitle = bookmarkData.oldTitle + " :::";
     bookmarkData.parents.forEach(function (parent) {
         newTitle = newTitle + " " + parent.toLowerCase().replace(" ", "");
     });
@@ -68,13 +68,29 @@ function processAllBookmarks(bookmarksTree) {
     console.log("bookmarksTree=" + bookmarksTree);
     var extractedBookmarks = extractBookmarks(bookmarksTree);
     console.log("extractedBookmarks=" + extractedBookmarks);
-    extractedBookmarks.forEach(function (newBookmarkData) {
+    extractedBookmarks.forEach(function (oldBookmarkData) {
+        var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
         browser.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle,
             url: newBookmarkData.url
-        }).then(function(){}, function(error){
+        }).then(function (updateResult) {
+            console.log("updateResult=" + JSON.stringify(updateResult));
+        }, function (error) {
             console.log("error " + error);
+            console.log("someBookmark error=" + JSON.stringify(someBookmark));
         });
+    // browser.bookmarks.get(newBookmarkData.id).then(function (someBookmark) {
+    //         console.log("someBookmark=" + JSON.stringify(someBookmark));
+    //         browser.bookmarks.update(newBookmarkData.id, {
+    //             title: newBookmarkData.newTitle,
+    //             url: newBookmarkData.url
+    //         }).then(function (updateResult) {
+    //             console.log("updateResult=" + JSON.stringify(updateResult));
+    //         }, function (error) {
+    //             console.log("error " + error);
+    //             console.log("someBookmark error=" + JSON.stringify(someBookmark));
+    //         });
+    //     });
     });
 }
 

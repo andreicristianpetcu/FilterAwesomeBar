@@ -115,9 +115,13 @@ describe("Bookmarks processor", function () {
         expect(browserSpy.runtime.onInstalled.addListener.called).toBeTruthy();
     });
 
-    xit("should processAllBookmarks when runInBackground is called", function () {
+    it("should processAllBookmarks when runInBackground is called", function () {
         var commonlibSpy = sinon.stub(commonlib, 'processAllBookmarks');
-        commonlibSpy.returns(Promise.resolve([]));
+        var promise = new Promise(function (resolve, reject) {
+            console.info("promise");
+            resolve([]);
+        });
+        commonlibSpy.returns(promise);
         commonlib.runInBackground(browserSpy);
         var listenerFunction = browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0];
 
@@ -135,7 +139,7 @@ describe("Bookmarks processor", function () {
         var promise = new Promise();
         promise.resolve([bookmarkData]);
         commonlibSpy.returns(promise);
-        var dummyBookmarkTree = [{name: "the tree"}];
+        var dummyBookmarkTree = [{ name: "the tree" }];
 
         commonlib.processAllBookmarks(dummyBookmarkTree);
 

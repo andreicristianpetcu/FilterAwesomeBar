@@ -28,6 +28,7 @@
     "babel-cli": "6.x.x",
     "babel-core": "6.x.x",
     "babel-loader": "7.x.x",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "1.x.x",
     "chai": "^4.1.2",
     "chromereload": "0.x.x",
