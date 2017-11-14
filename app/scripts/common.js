@@ -56,19 +56,14 @@ function generateNewBookmarkData(bookmarkData) {
     return newBookmarkData;
 }
 
-function runInBackground(browser) {
-    console.log("---runInBackground");
-    var listenerFunction = function () {
-        console.log("---listenerFunction");
-        browser.bookmarks.getTree().then(function (bookmarksTree) {
-            console.log("---browser.bookmarks.getTree().then");
-            console.log(bookmarksTree);
-            console.log(commonlib.processAllBookmarks);
-            commonlib.processAllBookmarks(bookmarksTree);
-        });
-    };
+function onInstalledListener() {
+    return browser.bookmarks.getTree().then(function (bookmarksTree) {
+        return commonlib.processAllBookmarks(bookmarksTree);
+    });
+};
 
-    browser.runtime.onInstalled.addListener(listenerFunction);
+function runInBackground(browser) {
+    return browser.runtime.onInstalled.addListener(onInstalledListener);
 }
 
 function processAllBookmarks(bookmarksTree) {
@@ -94,3 +89,4 @@ commonlib.shouldProcessBookmark = shouldProcessBookmark;
 commonlib.generateNewBookmarkData = generateNewBookmarkData;
 commonlib.runInBackground = runInBackground;
 commonlib.processAllBookmarks = processAllBookmarks;
+commonlib.onInstalledListener = onInstalledListener;
