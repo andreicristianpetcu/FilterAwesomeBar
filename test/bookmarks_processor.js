@@ -121,8 +121,12 @@ describe("Bookmarks processor", function () {
         var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
 
         expect(newBookmarkData.newTitle.split(' ::: ')[2]).toEqual('dwww dactivewatch dro');
-        expect(newBookmarkData.id).toEqual('911aHQ39pizY');
-        expect(newBookmarkData.url).toEqual('http://www.activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica');
+    });
+
+    it("generate a new title containing the url path parts", function () {
+        var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
+
+        expect(newBookmarkData.newTitle.split(' ::: ')[3]).toEqual('pro pfreeex preactierapida pcenzuradordelaexcelsioroexecutiepolitica');
     });
 
     it("should register onInstall when runInBackground", function () {

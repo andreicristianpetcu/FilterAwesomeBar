@@ -43,26 +43,40 @@ function shouldProcessBookmark(browserBookmark) {
     return browserBookmark.type === 'bookmark' && browserBookmark.url.indexOf('place:') === -1;
 }
 
-function getFolderParts(parents){
+function getFolderParts(parents) {
     var concatenatedDirectories = "";
     parents.forEach(function (parent) {
         concatenatedDirectories = concatenatedDirectories + "f" + parent.toLowerCase().replace(" ", "") + " ";
     });
-    return concatenatedDirectories.substr(0, concatenatedDirectories.length-1); 
+    return concatenatedDirectories.substr(0, concatenatedDirectories.length - 1);
 }
 
-function getDomainParts(fullUrl){
+function getDomainParts(fullUrl) {
     const hostname = new URL(fullUrl).hostname;
     const separatedHostnameParts = hostname.split(".").map((old) => {
         return "d" + old + " ";
     }).join("");
-    return separatedHostnameParts.substr(0, separatedHostnameParts.length-1);
+    return separatedHostnameParts.substr(0, separatedHostnameParts.length - 1);
+}
+
+function getPathParts(fullUrl) {
+    const pathname = new URL(fullUrl).pathname;
+    const separatedPathParts = pathname.split("/").map((old) => {
+        if (old.length !== 0) {
+            return "p" + old + " ";
+        } else {
+            return ""
+        }
+    }).join("");
+    return separatedPathParts.substr(0, separatedPathParts.length - 1);
 }
 
 function generateNewBookmarkData(bookmarkData) {
     const originalPageTitle = bookmarkData.oldTitle.split(separator)[0];
-    const newTitle = originalPageTitle + separator + getFolderParts(bookmarkData.parents)
-            + separator + getDomainParts(bookmarkData.url);
+    var titleSuffix = separator + getFolderParts(bookmarkData.parents) + separator +
+        getDomainParts(bookmarkData.url) + separator + getPathParts(bookmarkData.url);
+    titleSuffix = titleSuffix.split("-").join("");
+    const newTitle = originalPageTitle + titleSuffix;
     const newBookmarkData = {
         id: bookmarkData.id,
         newTitle: newTitle,
