@@ -73,19 +73,14 @@ function runInBackground(browser) {
 }
 
 function processAllBookmarks(bookmarksTree) {
-    console.log("bookmarksTree=" + bookmarksTree);
     var extractedBookmarks = extractBookmarks(bookmarksTree);
-    console.log("extractedBookmarks=" + extractedBookmarks);
     extractedBookmarks.forEach(function (oldBookmarkData) {
         var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
         browser.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle,
             url: newBookmarkData.url
         }).then(function (updateResult) {
-            console.log("updateResult=" + JSON.stringify(updateResult));
         }, function (error) {
-            console.log("error " + error);
-            console.log("someBookmark error=" + JSON.stringify(someBookmark));
         });
     });
 }
