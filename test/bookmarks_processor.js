@@ -103,7 +103,7 @@ describe("Bookmarks processor", function () {
     it("generate a new title containing the folders", function () {
         var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
 
-        expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: root bookmarksmenu');
+        expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: froot fbookmarksmenu');
         expect(newBookmarkData.id).toEqual('911aHQ39pizY');
         expect(newBookmarkData.url).toEqual('http://activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica');
     });
@@ -112,7 +112,7 @@ describe("Bookmarks processor", function () {
         bookmarkData.oldTitle = bookmarkData.oldTitle + " ::: root bookmarksmenu";
         var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
 
-        expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: root bookmarksmenu');
+        expect(newBookmarkData.newTitle).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch ::: froot fbookmarksmenu');
         expect(newBookmarkData.id).toEqual('911aHQ39pizY');
         expect(newBookmarkData.url).toEqual('http://activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica');
     });

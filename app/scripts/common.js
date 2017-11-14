@@ -49,7 +49,7 @@ function generateNewTitle(oldTitle, concatenatedDirectories, separator){
 function generateNewBookmarkData(bookmarkData) {
     var concatenatedDirectories = "";
     bookmarkData.parents.forEach(function (parent) {
-        concatenatedDirectories = concatenatedDirectories + " " + parent.toLowerCase().replace(" ", "");
+        concatenatedDirectories = concatenatedDirectories + " f" + parent.toLowerCase().replace(" ", "");
     });
 
     const newTitle = generateNewTitle(bookmarkData.oldTitle, concatenatedDirectories, " :::")
