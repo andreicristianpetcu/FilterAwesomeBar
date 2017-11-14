@@ -41,12 +41,18 @@ function shouldProcessBookmark(browserBookmark) {
     return browserBookmark.type === 'bookmark' && browserBookmark.url.indexOf('place:') === -1;
 }
 
+function generateNewTitle(oldTitle, concatenatedDirectories, separator){
+    const originalPageTitle = oldTitle.split(separator)[0];
+    return originalPageTitle + separator + concatenatedDirectories;
+}
+
 function generateNewBookmarkData(bookmarkData) {
-    var newTitle = bookmarkData.oldTitle + " :::";
+    var concatenatedDirectories = "";
     bookmarkData.parents.forEach(function (parent) {
-        newTitle = newTitle + " " + parent.toLowerCase().replace(" ", "");
+        concatenatedDirectories = concatenatedDirectories + " " + parent.toLowerCase().replace(" ", "");
     });
 
+    const newTitle = generateNewTitle(bookmarkData.oldTitle, concatenatedDirectories, " :::")
     const newBookmarkData = {
         id: bookmarkData.id,
         newTitle: newTitle,
