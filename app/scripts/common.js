@@ -8,6 +8,8 @@ if (window) {
 //     exports.commonlib = commonlib;
 // }
 
+const separator = " ::: ";
+
 function extractBookmarks(browserBookmarks, parents) {
     if (typeof parents === 'undefined') {
         parents = []
@@ -41,18 +43,26 @@ function shouldProcessBookmark(browserBookmark) {
     return browserBookmark.type === 'bookmark' && browserBookmark.url.indexOf('place:') === -1;
 }
 
-function generateNewTitle(oldTitle, concatenatedDirectories, separator){
-    const originalPageTitle = oldTitle.split(separator)[0];
-    return originalPageTitle + separator + concatenatedDirectories;
+function getFolderParts(parents){
+    var concatenatedDirectories = "";
+    parents.forEach(function (parent) {
+        concatenatedDirectories = concatenatedDirectories + "f" + parent.toLowerCase().replace(" ", "") + " ";
+    });
+    return concatenatedDirectories.substr(0, concatenatedDirectories.length-1); 
+}
+
+function getDomainParts(fullUrl){
+    const hostname = new URL(fullUrl).hostname;
+    const separatedHostnameParts = hostname.split(".").map((old) => {
+        return "d" + old + " ";
+    }).join("");
+    return separatedHostnameParts.substr(0, separatedHostnameParts.length-1);
 }
 
 function generateNewBookmarkData(bookmarkData) {
-    var concatenatedDirectories = "";
-    bookmarkData.parents.forEach(function (parent) {
-        concatenatedDirectories = concatenatedDirectories + " f" + parent.toLowerCase().replace(" ", "");
-    });
-
-    const newTitle = generateNewTitle(bookmarkData.oldTitle, concatenatedDirectories, " :::")
+    const originalPageTitle = bookmarkData.oldTitle.split(separator)[0];
+    const newTitle = originalPageTitle + separator + getFolderParts(bookmarkData.parents)
+            + separator + getDomainParts(bookmarkData.url);
     const newBookmarkData = {
         id: bookmarkData.id,
         newTitle: newTitle,
@@ -91,3 +101,4 @@ commonlib.generateNewBookmarkData = generateNewBookmarkData;
 commonlib.runInBackground = runInBackground;
 commonlib.processAllBookmarks = processAllBookmarks;
 commonlib.onInstalledListener = onInstalledListener;
+commonlib.separator = separator;
