@@ -16,6 +16,7 @@
     "dev:opera": "gulp --watch --vendor=opera",
     "dev:edge": "gulp --watch --vendor=edge",
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
+    "test:watch": "MOZ_HEADLESS=1 ./node_modules/karma/bin/karma start karma.conf.js --browsers Firefox --watch",
     "lint": "standard",
     "sign": "web-ext sign --api-key=$AMO_API_KEY --api-secret=$AMO_API_SECRET -s dist/firefox"
   },

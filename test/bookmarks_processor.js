@@ -96,7 +96,7 @@ describe("Bookmarks processor", function () {
     it("generate a new title containing the folders", function () {
         var newBookmarkData = commonlib.generateNewBookmarkData({
             id: "911aHQ39pizY",
-            title: "Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch",
+            oldTitle: "Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch",
             parents: [
                 "root",
                 "Bookmarks Menu"
@@ -115,19 +115,20 @@ describe("Bookmarks processor", function () {
         expect(browserSpy.runtime.onInstalled.addListener.called).toBeTruthy();
     });
 
-    it("should processAllBookmarks when runInBackground is called", function () {
-        var commonlibSpy = sinon.stub(commonlib, 'processAllBookmarks');
+    fit("should processAllBookmarks when runInBackground is called", function () {
+        const dummyBookmarksTree = [{}];
         var promise = new Promise(function (resolve, reject) {
-            console.info("promise");
-            resolve([]);
+            resolve(dummyBookmarksTree);
         });
-        commonlibSpy.returns(promise);
+        browserSpy.bookmarks.getTree.returns(promise);
+
+        var commonlibSpy = sinon.spy(commonlib, 'processAllBookmarks');
         commonlib.runInBackground(browserSpy);
         var listenerFunction = browserSpy.runtime.onInstalled.addListener.getCalls()[0].args[0];
 
         listenerFunction();
 
-        expect(commonlib.processAllBookmarks.called).toBeTruthy();
+        expect(commonlibSpy.called).toBeTruthy();
     });
 
     xit("should process the tree and update the bookmarks when processAllBookmarks", function () {

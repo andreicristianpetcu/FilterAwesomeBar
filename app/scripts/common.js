@@ -57,11 +57,18 @@ function generateNewBookmarkData(bookmarkData) {
 }
 
 function runInBackground(browser) {
-    browser.runtime.onInstalled.addListener(function () {
+    console.log("---runInBackground");
+    var listenerFunction = function () {
+        console.log("---listenerFunction");
         browser.bookmarks.getTree().then(function (bookmarksTree) {
+            console.log("---browser.bookmarks.getTree().then");
+            console.log(bookmarksTree);
+            console.log(commonlib.processAllBookmarks);
             commonlib.processAllBookmarks(bookmarksTree);
         });
-    });
+    };
+
+    browser.runtime.onInstalled.addListener(listenerFunction);
 }
 
 function processAllBookmarks(bookmarksTree) {
@@ -79,18 +86,6 @@ function processAllBookmarks(bookmarksTree) {
             console.log("error " + error);
             console.log("someBookmark error=" + JSON.stringify(someBookmark));
         });
-    // browser.bookmarks.get(newBookmarkData.id).then(function (someBookmark) {
-    //         console.log("someBookmark=" + JSON.stringify(someBookmark));
-    //         browser.bookmarks.update(newBookmarkData.id, {
-    //             title: newBookmarkData.newTitle,
-    //             url: newBookmarkData.url
-    //         }).then(function (updateResult) {
-    //             console.log("updateResult=" + JSON.stringify(updateResult));
-    //         }, function (error) {
-    //             console.log("error " + error);
-    //             console.log("someBookmark error=" + JSON.stringify(someBookmark));
-    //         });
-    //     });
     });
 }
 
