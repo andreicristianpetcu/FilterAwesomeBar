@@ -132,7 +132,7 @@ describe("Bookmarks processor", function () {
     it("should register onInstall when runInBackground", function () {
         commonlib.runInBackground(browser);
 
-        expect(browser.runtime.onInstalled.addListener.calledWith(commonlib.onInstalledListener)).toBeTruthy();
+        expect(browser.runtime.onInstalled.addListener.calledWith(commonlib.processAllBookmarks)).toBeTruthy();
     });
     
 });

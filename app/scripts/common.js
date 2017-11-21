@@ -4,9 +4,6 @@ const commonlib = {};
 if (window) {
     window.commonlib = commonlib;
 }
-// if (typeof exports !== 'undefined') {
-//     exports.commonlib = commonlib;
-// }
 
 const separator = " ::: ";
 
@@ -86,26 +83,37 @@ function generateNewBookmarkData(bookmarkData) {
     return newBookmarkData;
 }
 
-function onInstalledListener() {
-    return browser.bookmarks.getTree().then(function (bookmarksTree) {
-        return commonlib.processAllBookmarks(bookmarksTree);
-    });
-};
-
-function runInBackground(browser) {
-    return browser.runtime.onInstalled.addListener(onInstalledListener);
-}
-
-function processAllBookmarks(bookmarksTree) {
+function processBookmarksTreeBookmarks(bookmarksTree) {
     var extractedBookmarks = extractBookmarks(bookmarksTree);
     extractedBookmarks.forEach(function (oldBookmarkData) {
         var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
         browser.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle,
             url: newBookmarkData.url
-        }).then(function (updateResult) {
-        }, function (error) {
         });
+    });
+}
+
+function processAllBookmarks() {
+    return browser.bookmarks.getTree().then(function (bookmarksTree) {
+        return commonlib.processBookmarksTreeBookmarks(bookmarksTree);
+    });
+};
+
+function runInBackground(browser) {
+    return browser.runtime.onInstalled.addListener(processAllBookmarks);
+}
+
+if (typeof browser !== "undefined") {
+    browser.contextMenus.onClicked.addListener(function (info, tab) {
+        if (info.menuItemId == "processAllBookmarks") {
+            processAllBookmarks();
+        }
+    });
+    browser.contextMenus.create({
+        id: "processAllBookmarks",
+        title: "TurboAwesomeBar run!",
+        contexts: ["all"]
     });
 }
 
@@ -114,5 +122,5 @@ commonlib.shouldProcessBookmark = shouldProcessBookmark;
 commonlib.generateNewBookmarkData = generateNewBookmarkData;
 commonlib.runInBackground = runInBackground;
 commonlib.processAllBookmarks = processAllBookmarks;
-commonlib.onInstalledListener = onInstalledListener;
+commonlib.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
 commonlib.separator = separator;
