@@ -83,14 +83,25 @@ function generateNewBookmarkData(bookmarkData) {
     return newBookmarkData;
 }
 
+function fetchAndReprocessBookmark(bookmarkId) {
+    browser.bookmarks.get(bookmarkId).then(function (foundBookmarks) {
+        processBookmarksTreeBookmarks(foundBookmarks);
+    });
+}
+
+
+function reprocessBookmark(oldBookmarkData) {
+    var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
+    browser.bookmarks.update(newBookmarkData.id, {
+        title: newBookmarkData.newTitle,
+        url: newBookmarkData.url
+    });
+}
+
 function processBookmarksTreeBookmarks(bookmarksTree) {
     var extractedBookmarks = extractBookmarks(bookmarksTree);
     extractedBookmarks.forEach(function (oldBookmarkData) {
-        var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
-        browser.bookmarks.update(newBookmarkData.id, {
-            title: newBookmarkData.newTitle,
-            url: newBookmarkData.url
-        });
+        reprocessBookmark(oldBookmarkData);
     });
 }
 
@@ -115,6 +126,12 @@ if (typeof browser !== "undefined") {
         title: "TurboAwesomeBar run!",
         contexts: ["all"]
     });
+
+    function handleCreated(id) {
+        fetchAndReprocessBookmark(id);
+    }
+
+    browser.bookmarks.onCreated.addListener(handleCreated);
 }
 
 commonlib.extractBookmarks = extractBookmarks;
