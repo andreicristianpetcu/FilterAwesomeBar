@@ -132,6 +132,7 @@ if (typeof browser !== "undefined") {
     }
 
     browser.bookmarks.onCreated.addListener(handleCreated);
+    browser.bookmarks.onMoved.addListener(handleCreated);
 }
 
 commonlib.extractBookmarks = extractBookmarks;
