@@ -43,7 +43,6 @@ describe("Bookmarks processor", function () {
         }
     ];
 
-    var commonlibSpy;
     var bookmarkData;
     var separator = " ::: ";
     beforeEach(function () {
@@ -56,43 +55,27 @@ describe("Bookmarks processor", function () {
             ],
             url: "http://www.activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica"
         };
-        // var browser = {
-        //     runtime: {
-        //         onInstalled: {
-        //             addListener: sinon.stub()
-        //         }
-        //     },
-        //     bookmarks: {
-        //         getTree: sinon.stub(),
-        //         update: sinon.stub()
-        //     }
-        // };
-        // window.browser = browser;
         window.browser = chrome;
     });
 
     afterEach(function () {
-        if (commonlibSpy) {
-            commonlibSpy.restore();
-        }
         chrome.flush();
-        // delete global.chrome;
     });
 
     it("should return leaf items", function () {
-        var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
+        var extractedBookmarks = window.extractBookmarks(twoBookmarks);
 
         expect(extractedBookmarks.length).toBe(1);
     });
 
     it("should have correct fields", function () {
-        var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
+        var extractedBookmarks = window.extractBookmarks(twoBookmarks);
 
         expect(extractedBookmarks[0].id).toBe('911aHQ39pizY');
     });
 
     it("should not process 'place:' bookmarks", function () {
-        var shouldProccess = commonlib.shouldProcessBookmark({
+        var shouldProccess = window.shouldProcessBookmark({
             "url": "place:type=6&sort=14&maxResults=10"
         });
 
@@ -100,13 +83,13 @@ describe("Bookmarks processor", function () {
     });
 
     it("should not process 'place:' bookmarks", function () {
-        var extractedBookmarks = commonlib.extractBookmarks(twoBookmarks);
+        var extractedBookmarks = window.extractBookmarks(twoBookmarks);
 
         expect(extractedBookmarks[0].parents).toEqual(['root', 'Bookmarks Menu']);
     });
 
     it("generate a new title containing the folders", function () {
-        var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
+        var newBookmarkData = window.generateNewBookmarkData(bookmarkData);
 
         expect(newBookmarkData.newTitle.split(' ::: ')[0]).toEqual('Cenzura DoR de la Excelsior - o execuție politică - ActiveWatch');
         expect(newBookmarkData.newTitle.split(' ::: ')[1]).toEqual('froot fbookmarksmenu');
@@ -116,31 +99,31 @@ describe("Bookmarks processor", function () {
 
     it("generate a new title containing the folders even if it was generated before", function () {
         bookmarkData.oldTitle = bookmarkData.oldTitle + " ::: root bookmarksmenu";
-        var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
+        var newBookmarkData = window.generateNewBookmarkData(bookmarkData);
 
         expect(newBookmarkData.newTitle.split(bookmarkData.oldTitle).length).toEqual(1);
     });
 
     it("generate a new title containing the domain parts", function () {
-        var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
+        var newBookmarkData = window.generateNewBookmarkData(bookmarkData);
 
         expect(newBookmarkData.newTitle.split(' ::: ')[2]).toEqual('dwww dactivewatch dro');
     });
 
     it("generate a new title containing the url path parts", function () {
-        var newBookmarkData = commonlib.generateNewBookmarkData(bookmarkData);
+        var newBookmarkData = window.generateNewBookmarkData(bookmarkData);
 
         expect(newBookmarkData.newTitle.split(' ::: ')[3]).toEqual('pro pfreeex preactierapida pcenzuradordelaexcelsioroexecutiepolitica');
     });
 
     it("runInBackground should register onInstall listener", function () {
-        commonlib.runInBackground();
+        window.runInBackground();
 
-        expect(browser.runtime.onInstalled.addListener.withArgs(commonlib.processAllBookmarks).calledOnce).toBeTruthy();
+        expect(browser.runtime.onInstalled.addListener.withArgs(window.processAllBookmarks).calledOnce).toBeTruthy();
     });
 
     it("runInBackground should register context menu", function () {
-        commonlib.runInBackground();
+        window.runInBackground();
 
         expect(browser.contextMenus.create.withArgs({
             id: "processAllBookmarks",

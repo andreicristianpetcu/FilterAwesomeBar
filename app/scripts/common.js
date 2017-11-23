@@ -1,9 +1,4 @@
 // exports.helloObject = {hello: "world"};
-const commonlib = {};
-
-if (window) {
-    window.commonlib = commonlib;
-}
 
 const separator = " ::: ";
 
@@ -107,7 +102,7 @@ function processBookmarksTreeBookmarks(bookmarksTree) {
 
 function processAllBookmarks() {
     return browser.bookmarks.getTree().then(function (bookmarksTree) {
-        return commonlib.processBookmarksTreeBookmarks(bookmarksTree);
+        return processBookmarksTreeBookmarks(bookmarksTree);
     });
 };
 
@@ -131,12 +126,12 @@ function onClickedListener(info){
     }
 }
 
-commonlib.extractBookmarks = extractBookmarks;
-commonlib.shouldProcessBookmark = shouldProcessBookmark;
-commonlib.generateNewBookmarkData = generateNewBookmarkData;
-commonlib.runInBackground = runInBackground;
-commonlib.processAllBookmarks = processAllBookmarks;
-commonlib.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
-commonlib.separator = separator;
+window.extractBookmarks = extractBookmarks;
+window.shouldProcessBookmark = shouldProcessBookmark;
+window.generateNewBookmarkData = generateNewBookmarkData;
+window.runInBackground = runInBackground;
+window.processAllBookmarks = processAllBookmarks;
+window.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
+window.separator = separator;
 
 window.runInBackground = runInBackground;
