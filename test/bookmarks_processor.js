@@ -56,24 +56,27 @@ describe("Bookmarks processor", function () {
             ],
             url: "http://www.activewatch.ro/ro/freeex/reactie-rapida/cenzura-dor-de-la-excelsior-o-executie-politica"
         };
-        var browser = {
-            runtime: {
-                onInstalled: {
-                    addListener: sinon.stub()
-                }
-            },
-            bookmarks: {
-                getTree: sinon.stub(),
-                update: sinon.stub()
-            }
-        };
-        window.browser = browser;
+        // var browser = {
+        //     runtime: {
+        //         onInstalled: {
+        //             addListener: sinon.stub()
+        //         }
+        //     },
+        //     bookmarks: {
+        //         getTree: sinon.stub(),
+        //         update: sinon.stub()
+        //     }
+        // };
+        // window.browser = browser;
         window.browser = chrome;
     });
+
     afterEach(function () {
         if (commonlibSpy) {
             commonlibSpy.restore();
         }
+        chrome.flush();
+        // delete global.chrome;
     });
 
     it("should return leaf items", function () {
@@ -130,11 +133,27 @@ describe("Bookmarks processor", function () {
         expect(newBookmarkData.newTitle.split(' ::: ')[3]).toEqual('pro pfreeex preactierapida pcenzuradordelaexcelsioroexecutiepolitica');
     });
 
-    it("should register onInstall when runInBackground", function () {
-
+    it("runInBackground should register onInstall listener", function () {
         commonlib.runInBackground();
 
-        expect(chrome.runtime.onInstalled.addListener.withArgs(commonlib.processAllBookmarks).calledOnce).toBeTruthy();
+        expect(browser.runtime.onInstalled.addListener.withArgs(commonlib.processAllBookmarks).calledOnce).toBeTruthy();
     });
-    
+
+    it("runInBackground should register context menu", function () {
+        commonlib.runInBackground();
+
+        expect(browser.contextMenus.create.withArgs({
+            id: "processAllBookmarks",
+            title: "TurboAwesomeBar run!",
+            contexts: ["all"]
+        }).calledOnce).toBeTruthy();
+        expect(browser.contextMenus.onClicked.addListener.withArgs(onClickedListener).calledOnce).toBeTruthy();
+    });
+
+    it("runInBackground should update and moved listeners", function () {
+        runInBackground();
+
+        expect(browser.bookmarks.onCreated.addListener.withArgs(fetchAndReprocessBookmark).calledOnce).toBeTruthy();
+        expect(browser.bookmarks.onMoved.addListener.withArgs(fetchAndReprocessBookmark).calledOnce).toBeTruthy();
+    })
 });

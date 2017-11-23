@@ -112,27 +112,23 @@ function processAllBookmarks() {
 };
 
 function runInBackground() {
-    return browser.runtime.onInstalled.addListener(processAllBookmarks);
-}
-
-if (typeof browser !== "undefined") {
-    browser.contextMenus.onClicked.addListener(function (info, tab) {
-        if (info.menuItemId == "processAllBookmarks") {
-            processAllBookmarks();
-        }
-    });
     browser.contextMenus.create({
         id: "processAllBookmarks",
         title: "TurboAwesomeBar run!",
         contexts: ["all"]
     });
+    browser.contextMenus.onClicked.addListener(onClickedListener);
 
-    function handleCreated(id) {
-        fetchAndReprocessBookmark(id);
+    browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
+    browser.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
+
+    return browser.runtime.onInstalled.addListener(processAllBookmarks);
+}
+
+function onClickedListener(info){
+    if (info.menuItemId == "processAllBookmarks") {
+        processAllBookmarks();
     }
-
-    browser.bookmarks.onCreated.addListener(handleCreated);
-    browser.bookmarks.onMoved.addListener(handleCreated);
 }
 
 commonlib.extractBookmarks = extractBookmarks;
