@@ -2,7 +2,7 @@ module.exports = function(config) {
     config.set({
       files: [
         'node_modules/babel-polyfill/dist/polyfill.js',
-        'app/scripts/**/*.js',
+        'app/scripts/common.js',
         'test/**/*.js'
       ],
       browsers: ['Firefox'],

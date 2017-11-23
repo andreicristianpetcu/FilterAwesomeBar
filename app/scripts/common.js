@@ -138,3 +138,5 @@ commonlib.runInBackground = runInBackground;
 commonlib.processAllBookmarks = processAllBookmarks;
 commonlib.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
 commonlib.separator = separator;
+
+window.runInBackground = runInBackground;
