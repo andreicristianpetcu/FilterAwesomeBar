@@ -68,6 +68,7 @@ describe("Bookmarks processor", function () {
             }
         };
         window.browser = browser;
+        window.browser = chrome;
     });
     afterEach(function () {
         if (commonlibSpy) {
@@ -130,9 +131,10 @@ describe("Bookmarks processor", function () {
     });
 
     it("should register onInstall when runInBackground", function () {
-        commonlib.runInBackground(browser);
 
-        expect(browser.runtime.onInstalled.addListener.calledWith(commonlib.processAllBookmarks)).toBeTruthy();
+        commonlib.runInBackground();
+
+        expect(chrome.runtime.onInstalled.addListener.withArgs(commonlib.processAllBookmarks).calledOnce).toBeTruthy();
     });
     
 });

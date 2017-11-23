@@ -111,7 +111,7 @@ function processAllBookmarks() {
     });
 };
 
-function runInBackground(browser) {
+function runInBackground() {
     return browser.runtime.onInstalled.addListener(processAllBookmarks);
 }
 
