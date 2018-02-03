@@ -19,7 +19,8 @@
     "test:watch": "MOZ_HEADLESS=1 ./node_modules/karma/bin/karma start karma.conf.js --browsers Firefox --watch",
     "test:watchdesktop": "./node_modules/karma/bin/karma start karma.conf.js --browsers Firefox --watch",
     "lint": "standard",
-    "sign": "web-ext sign --api-key=$AMO_API_KEY --api-secret=$AMO_API_SECRET -s dist/firefox"
+    "sign": "./node_modules/web-ext/bin/web-ext sign --api-key=$AMO_API_KEY --api-secret=$AMO_API_SECRET -s dist/firefox",
+    "web-ext-run": "./node_modules/web-ext/bin/web-ext run -s dist/firefox"
   },
   "standard": {
     "globals": [
@@ -75,6 +76,7 @@
     "sinon-chrome": "^2.2.4",
     "standard": "^10.0.2",
     "vinyl-named": "1.x.x",
+    "web-ext": "^2.4.0",
     "webpack": "^3.10.0",
     "webpack-stream": "3.x.x",
     "yargs": "^8.x.x"
