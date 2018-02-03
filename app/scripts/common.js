@@ -87,10 +87,13 @@ function fetchAndReprocessBookmark(bookmarkId) {
 
 function reprocessBookmark(oldBookmarkData) {
     var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
-    browser.bookmarks.update(newBookmarkData.id, {
-        title: newBookmarkData.newTitle,
-        url: newBookmarkData.url
-    });
+    if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle){
+        // console.log("updating " + newBookmarkData.newTitle);
+        browser.bookmarks.update(newBookmarkData.id, {
+            title: newBookmarkData.newTitle,
+            url: newBookmarkData.url
+        });
+    }
 }
 
 function processBookmarksTreeBookmarks(bookmarksTree) {
