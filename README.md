@@ -8,7 +8,7 @@ Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor 
 
 ## Usage
 
-Run `$ gulp --watch` and load the `dist`-directory into chrome.
+Run `$ gulp --watch --vendor=firefox` and then open a new terminal and run `npm run web-ext-run`.
 
 ## Entryfiles (bundles)
 
