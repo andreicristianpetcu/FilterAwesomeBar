@@ -87,7 +87,7 @@ function crawlParentTitles(parentId, previousParents) {
         const foundBookmark = foundBookmarks[0];
         previousParents.push(getBookmarkTitle(foundBookmark));
         if(typeof foundBookmark.parentId === 'undefined'){
-            return Promise.resolve(previousParents);
+            return Promise.resolve(previousParents.reverse());
         } else {
             return crawlParentTitles(foundBookmark.parentId, previousParents);
         }
@@ -97,8 +97,10 @@ function crawlParentTitles(parentId, previousParents) {
 function fetchAndReprocessBookmark(bookmarkId) {
     browser.bookmarks.get(bookmarkId).then(function (foundBookmarks) {
         crawlParentTitles(foundBookmarks[0].parentId).then(function(parents){
-            foundBookmarks[0].parents = parents;
-            processBookmarksTreeBookmarks(foundBookmarks, parents);
+            const foundBookmark = foundBookmarks[0];
+            foundBookmark.parents = parents;
+            foundBookmark.oldTitle = foundBookmark.title;
+            reprocessBookmark(foundBookmark);
         });
     });
 }
