@@ -1,10 +1,8 @@
-// exports.helloObject = {hello: "world"};
-
 const separator = " ::: ";
 
 function extractBookmarks(browserBookmarks, parents) {
     if (typeof parents === 'undefined') {
-        parents = []
+        parents = [];
     }
     var returnedBookmars = [];
     browserBookmarks.forEach(function (browserBookmark) {
@@ -17,18 +15,21 @@ function extractBookmarks(browserBookmarks, parents) {
             });
         } else if (browserBookmark.type === 'folder') {
             var childParents = parents.slice(0);
-            var currentTitle;
-            if (browserBookmark.id === "root________") {
-                currentTitle = 'root';
-            } else {
-                currentTitle = browserBookmark.title;
-            }
+            var currentTitle = getBookmarkTitle(browserBookmark);
             childParents.push(currentTitle);
             const childBookmarks = extractBookmarks(browserBookmark.children, childParents);
             Array.prototype.push.apply(returnedBookmars, childBookmarks);
         }
     }, this);
     return returnedBookmars;
+}
+
+function getBookmarkTitle(browserBookmark){
+    if (browserBookmark.id === "root________") {
+        return 'root';
+    } else {
+        return browserBookmark.title;
+    }
 }
 
 function shouldProcessBookmark(browserBookmark) {
@@ -57,7 +58,7 @@ function getPathParts(fullUrl) {
         if (old.length !== 0) {
             return "p" + old + " ";
         } else {
-            return ""
+            return "";
         }
     }).join("");
     return separatedPathParts.substr(0, separatedPathParts.length - 1);
@@ -73,14 +74,32 @@ function generateNewBookmarkData(bookmarkData) {
         id: bookmarkData.id,
         newTitle: newTitle,
         url: bookmarkData.url
-    }
+    };
 
     return newBookmarkData;
 }
 
+function crawlParentTitles(parentId, previousParents) {
+    if(typeof parentId === 'undefined' || typeof previousParents === 'undefined'){
+        previousParents = [];
+    }
+    return browser.bookmarks.get(parentId).then(function(foundBookmarks) {
+        const foundBookmark = foundBookmarks[0];
+        previousParents.push(getBookmarkTitle(foundBookmark));
+        if(typeof foundBookmark.parentId === 'undefined'){
+            return Promise.resolve(previousParents);
+        } else {
+            return crawlParentTitles(foundBookmark.parentId, previousParents);
+        }
+    });
+}
+
 function fetchAndReprocessBookmark(bookmarkId) {
     browser.bookmarks.get(bookmarkId).then(function (foundBookmarks) {
-        processBookmarksTreeBookmarks(foundBookmarks);
+        crawlParentTitles(foundBookmarks[0].parentId).then(function(parents){
+            foundBookmarks[0].parents = parents;
+            processBookmarksTreeBookmarks(foundBookmarks, parents);
+        });
     });
 }
 
@@ -88,7 +107,7 @@ function fetchAndReprocessBookmark(bookmarkId) {
 function reprocessBookmark(oldBookmarkData) {
     var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
     if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle){
-        // console.log("updating " + newBookmarkData.newTitle);
+        console.log("updating " + newBookmarkData.newTitle);
         browser.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle,
             url: newBookmarkData.url
@@ -107,7 +126,7 @@ function processAllBookmarks() {
     return browser.bookmarks.getTree().then(function (bookmarksTree) {
         return processBookmarksTreeBookmarks(bookmarksTree);
     });
-};
+}
 
 function runInBackground() {
     browser.contextMenus.create({
@@ -136,5 +155,3 @@ window.runInBackground = runInBackground;
 window.processAllBookmarks = processAllBookmarks;
 window.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
 window.separator = separator;
-
-window.runInBackground = runInBackground;
