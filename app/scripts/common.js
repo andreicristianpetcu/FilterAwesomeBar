@@ -94,14 +94,35 @@ function crawlParentTitles(parentId, previousParents) {
     });
 }
 
+function findBookmarkFromTree(bookmarkId){
+    return browser.bookmarks.getSubTree(bookmarkId);
+}
+
+function findBookmarkFromTreeWithItems(bookmarkId, bookmarksToFindIn){
+    var foundBookmarkById;
+    bookmarksToFindIn.forEach(function(bookmarkToCheck){
+        if(bookmarkToCheck.id === bookmarkId){
+            foundBookmarkById = bookmarkToCheck;
+        } else if(typeof bookmarkToCheck.children !== 'undefined' && typeof foundBookmarkById === 'undefined'){
+            foundBookmarkById = findBookmarkFromTreeWithItems(bookmarkId, bookmarkToCheck.children);
+        }
+    });
+    return foundBookmarkById;
+}
+
 function fetchAndReprocessBookmark(bookmarkId) {
-    browser.bookmarks.get(bookmarkId).then(function (foundBookmarks) {
-        crawlParentTitles(foundBookmarks[0].parentId).then(function(parents){
-            const foundBookmark = foundBookmarks[0];
-            foundBookmark.parents = parents;
-            foundBookmark.oldTitle = foundBookmark.title;
-            reprocessBookmark(foundBookmark);
-        });
+    findBookmarkFromTree(bookmarkId).then(function (foundBookmarks) {
+        const foundBookmark = foundBookmarks[0];
+        if(foundBookmark.type !== 'folder'){
+            crawlParentTitles(foundBookmark.parentId).then(function(parents){
+                const foundBookmark = foundBookmarks[0];
+                foundBookmark.parents = parents;
+                foundBookmark.oldTitle = foundBookmark.title;
+                reprocessBookmark(foundBookmark);
+            });
+        } else {
+            processBookmarksTreeBookmarks(foundBookmarks);
+        }
     });
 }
 
@@ -140,6 +161,7 @@ function runInBackground() {
 
     browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
     browser.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
+    browser.bookmarks.onChanged.addListener(fetchAndReprocessBookmark);
 
     return browser.runtime.onInstalled.addListener(processAllBookmarks);
 }
