@@ -154,7 +154,7 @@ function processAllBookmarks() {
 function runInBackground() {
     browser.contextMenus.create({
         id: "processAllBookmarks",
-        title: "TurboAwesomeBar run!",
+        title: "Filter AwesomeBar run!",
         contexts: ["all"]
     });
     browser.contextMenus.onClicked.addListener(onClickedListener);

@@ -1,6 +1,8 @@
-# TurboAwesomeBar
+# FilterAwesomeBar
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+The icon is [filter by Nimal Raj from the Noun Project](https://thenounproject.com/search/?q=filter&i=430858)
 
 ## Installation
 

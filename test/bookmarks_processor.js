@@ -127,7 +127,7 @@ describe("Bookmarks processor", function () {
 
         expect(browser.contextMenus.create.withArgs({
             id: "processAllBookmarks",
-            title: "TurboAwesomeBar run!",
+            title: "Filter AwesomeBar run!",
             contexts: ["all"]
         }).calledOnce).toBeTruthy();
         expect(browser.contextMenus.onClicked.addListener.withArgs(onClickedListener).calledOnce).toBeTruthy();
