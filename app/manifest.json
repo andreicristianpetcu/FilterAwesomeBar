@@ -13,6 +13,11 @@
     "96": "images/icon-96.png",
     "128": "images/icon-128.png"
   },
+  "browser_action": {
+    "default_icon": "images/icon-128.png",
+    "default_title": "Regenerate bookmark suffixes",
+    "default_area": "menupanel"
+  },
   "background": {
     "scripts": [
       "scripts/common.js",
@@ -20,7 +25,6 @@
     ]
   },
   "permissions": [
-    "bookmarks",
-    "contextMenus"
+    "bookmarks"
   ]
 }

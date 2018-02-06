@@ -17,7 +17,10 @@
    sodipodi:docname="logo.svg"
    inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
    width="100"
-   height="100"><metadata
+   height="100"
+   inkscape:export-filename="/home/andrei/Dev/TurboAwesomeBar/app/images/icon-128.png"
+   inkscape:export-xdpi="122.88"
+   inkscape:export-ydpi="122.88"><metadata
      id="metadata3859"><rdf:RDF><cc:Work
          rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
@@ -35,7 +38,7 @@
      id="namedview3855"
      showgrid="false"
      inkscape:zoom="6.808"
-     inkscape:cx="0.64629827"
+     inkscape:cx="-0.60223287"
      inkscape:cy="44.286134"
      inkscape:window-x="0"
      inkscape:window-y="27"
@@ -55,7 +58,7 @@
        id="rect4668"
        width="95"
        height="95"
-       x="2.20329"
+       x="2.6439481"
        y="27.119858"
        ry="14.556453" /></g><g
      inkscape:groupmode="layer"

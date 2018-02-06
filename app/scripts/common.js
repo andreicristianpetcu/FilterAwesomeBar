@@ -130,7 +130,6 @@ function fetchAndReprocessBookmark(bookmarkId) {
 function reprocessBookmark(oldBookmarkData) {
     var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
     if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle){
-        console.log("updating " + newBookmarkData.newTitle);
         browser.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle,
             url: newBookmarkData.url
@@ -152,12 +151,8 @@ function processAllBookmarks() {
 }
 
 function runInBackground() {
-    browser.contextMenus.create({
-        id: "processAllBookmarks",
-        title: "Filter AwesomeBar run!",
-        contexts: ["all"]
-    });
     browser.contextMenus.onClicked.addListener(onClickedListener);
+    browser.browserAction.onClicked.addListener(onClickedListener);
 
     browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
     browser.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
