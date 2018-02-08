@@ -111,28 +111,29 @@ function findBookmarkFromTreeWithItems(bookmarkId, bookmarksToFindIn){
 }
 
 function fetchAndReprocessBookmark(bookmarkId) {
-    findBookmarkFromTree(bookmarkId).then(function (foundBookmarks) {
-        const foundBookmark = foundBookmarks[0];
-        if(foundBookmark.type !== 'folder'){
-            crawlParentTitles(foundBookmark.parentId).then(function(parents){
-                const foundBookmark = foundBookmarks[0];
-                foundBookmark.parents = parents;
-                foundBookmark.oldTitle = foundBookmark.title;
-                reprocessBookmark(foundBookmark);
-            });
-        } else {
-            processBookmarksTreeBookmarks(foundBookmarks);
-        }
-    });
+    if(reverting === false) {
+        findBookmarkFromTree(bookmarkId).then(function (foundBookmarks) {
+            const foundBookmark = foundBookmarks[0];
+            if(foundBookmark.type !== 'folder'){
+                crawlParentTitles(foundBookmark.parentId).then(function(parents){
+                    const foundBookmark = foundBookmarks[0];
+                    foundBookmark.parents = parents;
+                    foundBookmark.oldTitle = foundBookmark.title;
+                    reprocessBookmark(foundBookmark);
+                });
+            } else {
+                processBookmarksTreeBookmarks(foundBookmarks);
+            }
+        });
+    }
 }
 
 
 function reprocessBookmark(oldBookmarkData) {
     var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
-    if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle){
+    if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle && !newBookmarkData.newTitle.startsWith(separator)){
         browser.bookmarks.update(newBookmarkData.id, {
-            title: newBookmarkData.newTitle,
-            url: newBookmarkData.url
+            title: newBookmarkData.newTitle
         });
     }
 }
@@ -150,20 +151,43 @@ function processAllBookmarks() {
     });
 }
 
+function getBookmarksTreeAsList(bookmarksTree){
+    const bookmarksList = [];
+    bookmarksTree.forEach(function (bookmark) {
+        bookmarksList.push(bookmark);
+        if(typeof bookmark.children !== 'undefined'){
+            bookmarksList.push.apply(bookmarksList, getBookmarksTreeAsList(bookmark.children));
+        }
+    });
+    return bookmarksList;
+}
+
+var reverting = false;
+
+function revertBookmarks(){
+    reverting = !reverting;
+    if(reverting){
+        browser.bookmarks.getTree().then(function (bookmarksTree) {
+            var allBookmarksList = getBookmarksTreeAsList(bookmarksTree);
+            allBookmarksList.forEach(function (bookmark) {
+                browser.bookmarks.update(bookmark.id, {
+                    title: bookmark.title.split(separator)[0]
+                });
+            });
+        });
+    } else {
+        processAllBookmarks();
+    }
+}
+
 function runInBackground() {
-    browser.browserAction.onClicked.addListener(onClickedListener);
+    browser.browserAction.onClicked.addListener(revertBookmarks);
 
     browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
     browser.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
     browser.bookmarks.onChanged.addListener(fetchAndReprocessBookmark);
 
     return browser.runtime.onInstalled.addListener(processAllBookmarks);
-}
-
-function onClickedListener(info){
-    if (info.menuItemId == "processAllBookmarks") {
-        processAllBookmarks();
-    }
 }
 
 window.extractBookmarks = extractBookmarks;

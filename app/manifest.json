@@ -2,7 +2,7 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "manifest_version": 2,
   "default_locale": "en",
   "icons": {
@@ -15,7 +15,7 @@
   },
   "browser_action": {
     "default_icon": "images/icons/icon-128.png",
-    "default_title": "Regenerate bookmark suffixes",
+    "default_title": "Toggle bookmark suffixes",
     "default_area": "menupanel"
   },
   "background": {
