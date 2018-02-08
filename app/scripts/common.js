@@ -151,7 +151,6 @@ function processAllBookmarks() {
 }
 
 function runInBackground() {
-    browser.contextMenus.onClicked.addListener(onClickedListener);
     browser.browserAction.onClicked.addListener(onClickedListener);
 
     browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);

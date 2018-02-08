@@ -122,17 +122,6 @@ describe("Bookmarks processor", function () {
         expect(browser.runtime.onInstalled.addListener.withArgs(window.processAllBookmarks).calledOnce).toBeTruthy();
     });
 
-    it("runInBackground should register context menu", function () {
-        window.runInBackground();
-
-        expect(browser.contextMenus.create.withArgs({
-            id: "processAllBookmarks",
-            title: "Filter AwesomeBar run!",
-            contexts: ["all"]
-        }).calledOnce).toBeTruthy();
-        expect(browser.contextMenus.onClicked.addListener.withArgs(onClickedListener).calledOnce).toBeTruthy();
-    });
-
     it("runInBackground should update and moved listeners", function () {
         runInBackground();
 

@@ -2,19 +2,19 @@
   "name": "__MSG_appName__",
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
-  "version": "1.0.0",
+  "version": "1.0.3",
   "manifest_version": 2,
   "default_locale": "en",
   "icons": {
-    "16": "images/icon-16.png",
-    "19": "images/icon-19.png",
-    "38": "images/icon-38.png",
-    "48": "images/icon-48.png",
-    "96": "images/icon-96.png",
-    "128": "images/icon-128.png"
+    "16": "images/icons/icon-16.png",
+    "19": "images/icons/icon-19.png",
+    "38": "images/icons/icon-38.png",
+    "48": "images/icons/icon-48.png",
+    "96": "images/icons/icon-96.png",
+    "128": "images/icons/icon-128.png"
   },
   "browser_action": {
-    "default_icon": "images/icon-128.png",
+    "default_icon": "images/icons/icon-128.png",
     "default_title": "Regenerate bookmark suffixes",
     "default_area": "menupanel"
   },
