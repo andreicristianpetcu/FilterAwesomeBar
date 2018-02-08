@@ -16,7 +16,9 @@ function extractBookmarks(browserBookmarks, parents) {
         } else if (browserBookmark.type === 'folder') {
             var childParents = parents.slice(0);
             var currentTitle = getBookmarkTitle(browserBookmark);
-            childParents.push(currentTitle);
+            if(browserBookmark.id.indexOf('_____') === -1){
+                childParents.push(currentTitle);
+            }
             const childBookmarks = extractBookmarks(browserBookmark.children, childParents);
             Array.prototype.push.apply(returnedBookmars, childBookmarks);
         }
@@ -26,7 +28,7 @@ function extractBookmarks(browserBookmarks, parents) {
 
 function getBookmarkTitle(browserBookmark){
     if (browserBookmark.id === "root________") {
-        return 'root';
+        return '';
     } else {
         return browserBookmark.title;
     }
@@ -69,7 +71,10 @@ function generateNewBookmarkData(bookmarkData) {
     var titleSuffix = separator + getFolderParts(bookmarkData.parents) + separator +
         getDomainParts(bookmarkData.url) + separator + getPathParts(bookmarkData.url);
     titleSuffix = titleSuffix.split("-").join("");
-    const newTitle = originalPageTitle + titleSuffix;
+    var newTitle = originalPageTitle + titleSuffix;
+    if(newTitle.indexOf(separator + separator)){
+        newTitle = newTitle + newTitle.split(newTitle + newTitle)[1];
+    }
     const newBookmarkData = {
         id: bookmarkData.id,
         newTitle: newTitle,
@@ -85,7 +90,10 @@ function crawlParentTitles(parentId, previousParents) {
     }
     return browser.bookmarks.get(parentId).then(function(foundBookmarks) {
         const foundBookmark = foundBookmarks[0];
-        previousParents.push(getBookmarkTitle(foundBookmark));
+        const bookmarkTitle = getBookmarkTitle(foundBookmark);
+        if(bookmarkTitle !== ''){
+            previousParents.push(bookmarkTitle);
+        }
         if(typeof foundBookmark.parentId === 'undefined'){
             return Promise.resolve(previousParents.reverse());
         } else {

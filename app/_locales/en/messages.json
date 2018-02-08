@@ -8,7 +8,7 @@
     "description": "Filter AwesomeBar"
   },
   "appDescription": {
-    "message": "BACKUP YOUR BOOKMARKS BEFORE USING THIS!!! This addon is still experimental!!!\n\nFiltering is better than searching!\nIt suffixes all your bookmarks with the name of their folders, domains, parts of the URL.\n\nF is for Folder\nD is for domain name\nP is for URL path\n\n\nThe icon is filter by Nimal Raj from the Noun Project https://thenounproject.com/search/?q=filter&i=430858",
+    "message": "Filtering is better than searching!\nIt suffixes all your bookmarks with the name of their folders, domains, parts of the URL.\n\nF is for Folder\nD is for domain name\nP is for URL path\n\n\nThe icon is filter by Nimal Raj from the Noun Project https://thenounproject.com/search/?q=filter&i=430858",
     "description": "The description of the application"
   }
 }
