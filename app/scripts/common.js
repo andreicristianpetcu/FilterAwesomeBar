@@ -170,7 +170,7 @@ function getBookmarksTreeAsList(bookmarksTree){
     return bookmarksList;
 }
 
-var reverting = false;
+var reverting = true;
 
 function revertBookmarks(){
     reverting = !reverting;
