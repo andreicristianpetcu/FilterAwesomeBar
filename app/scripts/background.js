@@ -100,6 +100,42 @@ function searchBookmarks(query) {
   if (!query || query.length < 2) return [];
   
   const queryLower = query.toLowerCase();
+  
+  // Check for prefix-based search (f/d/p)
+  if (queryLower.startsWith('f') && queryLower.length > 1) {
+    // Search folders: ffedora
+    const folderQuery = queryLower.substring(1);
+    return bookmarkCache
+      .filter(bookmark => {
+        const titleLower = bookmark.title.toLowerCase();
+        return titleLower.includes(`f${folderQuery}`);
+      })
+      .slice(0, 12);
+  }
+  
+  if (queryLower.startsWith('d') && queryLower.length > 1) {
+    // Search domains: dfedora
+    const domainQuery = queryLower.substring(1);
+    return bookmarkCache
+      .filter(bookmark => {
+        const titleLower = bookmark.title.toLowerCase();
+        return titleLower.includes(`d${domainQuery}`);
+      })
+      .slice(0, 12);
+  }
+  
+  if (queryLower.startsWith('p') && queryLower.length > 1) {
+    // Search paths: pfedora
+    const pathQuery = queryLower.substring(1);
+    return bookmarkCache
+      .filter(bookmark => {
+        const titleLower = bookmark.title.toLowerCase();
+        return titleLower.includes(`p${pathQuery}`);
+      })
+      .slice(0, 12);
+  }
+  
+  // Default: search title and URL
   return bookmarkCache
     .filter(bookmark => {
       const titleLower = bookmark.title.toLowerCase();
