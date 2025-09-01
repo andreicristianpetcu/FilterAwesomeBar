@@ -106,7 +106,7 @@ function searchBookmarks(query) {
       const urlLower = bookmark.url.toLowerCase();
       return titleLower.includes(queryLower) || urlLower.includes(queryLower);
     })
-    .slice(0, 6); // Limit to 6 suggestions
+    .slice(0, 12); // Limit to 12 suggestions
 }
 
 function updateBookmarkCache() {
