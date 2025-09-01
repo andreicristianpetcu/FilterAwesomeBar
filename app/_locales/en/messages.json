@@ -8,7 +8,7 @@
     "description": "Filter AwesomeBar"
   },
   "appDescription": {
-    "message": "Filtering is better than searching!\nIt suffixes all your bookmarks with the name of their folders, domains, parts of the URL.\n\nF is for Folder\nD is for domain name\nP is for URL path\n\n\nThe icon is filter by Nimal Raj from the Noun Project https://thenounproject.com/search/?q=filter&i=430858",
+    "message": "Enhanced bookmark search with omnibox integration! Type 'bm' in the address bar followed by your search term to quickly find and navigate to bookmarks.\n\nFeatures:\n• Omnibox search: Type 'bm <query>' in address bar\n• Auto-suffix bookmarks with folder/domain/path info\n• Toggle suffix mode with extension button\n\nF=Folder, D=Domain, P=Path\n\nIcon by Nimal Raj from Noun Project",
     "description": "The description of the application"
   }
 }

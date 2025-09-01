@@ -1,6 +1,7 @@
 import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
-const args = yargs
+const args = yargs(hideBin(process.argv))
 
   .option('production', {
     boolean: true,
