@@ -40,9 +40,10 @@ chrome.bookmarks.onRemoved.addListener(() => {
 // Omnibox functionality
 chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   const suggestions = searchBookmarks(text);
+  const searchType = getSearchTypeEmoji(text);
   suggest(suggestions.map(bookmark => ({
     content: bookmark.url,
-    description: `📖 ${formatBookmarkForDisplay(bookmark.title)} - ${bookmark.url}`
+    description: `${searchType} ${formatBookmarkForDisplay(bookmark.title)} - ${bookmark.url}`
   })));
 });
 
@@ -94,6 +95,28 @@ function formatBookmarkForDisplay(title) {
   }
   
   return originalTitle;
+}
+
+function getSearchTypeEmoji(query) {
+  const queryLower = query.toLowerCase();
+  
+  // Folder search: ffedora
+  if (queryLower.startsWith('f') && queryLower.length > 1) {
+    return '📂';
+  }
+  
+  // Domain search: dfedora  
+  if (queryLower.startsWith('d') && queryLower.length > 1) {
+    return '🌐';
+  }
+  
+  // Path search: pgithub
+  if (queryLower.startsWith('p') && queryLower.length > 1) {
+    return '🛤️';
+  }
+  
+  // Default search (title + URL)
+  return '🔍';
 }
 
 function searchBookmarks(query) {
