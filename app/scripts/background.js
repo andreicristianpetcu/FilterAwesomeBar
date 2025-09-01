@@ -42,7 +42,7 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   const suggestions = searchBookmarks(text);
   suggest(suggestions.map(bookmark => ({
     content: bookmark.url,
-    description: `📖 ${bookmark.title} - ${bookmark.url}`
+    description: `📖 ${formatBookmarkForDisplay(bookmark.title)} - ${bookmark.url}`
   })));
 });
 
@@ -72,6 +72,28 @@ function navigateToUrl(url, disposition) {
       chrome.tabs.create({ url: url, active: false });
       break;
   }
+}
+
+function formatBookmarkForDisplay(title) {
+  // Extract the original title and folder information from the suffix
+  const parts = title.split(separator);
+  if (parts.length < 2) {
+    return title; // No suffix, return as-is
+  }
+  
+  const originalTitle = parts[0];
+  const suffixPart = parts[1];
+  
+  // Extract folder parts (they start with 'f')
+  const folderMatches = suffixPart.match(/f[a-zA-Z0-9]+/g);
+  const folders = folderMatches ? folderMatches.map(f => f.substring(1)) : [];
+  
+  // Build hierarchical path: Parent / Child / Bookmark
+  if (folders.length > 0) {
+    return `${folders.join(' / ')} / ${originalTitle}`;
+  }
+  
+  return originalTitle;
 }
 
 function searchBookmarks(query) {
