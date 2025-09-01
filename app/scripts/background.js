@@ -43,7 +43,7 @@ chrome.omnibox.onInputChanged.addListener((text, suggest) => {
   const searchType = getSearchTypeEmoji(text);
   suggest(suggestions.map(bookmark => ({
     content: bookmark.url,
-    description: `${searchType} ${formatBookmarkForDisplay(bookmark.title)} - ${bookmark.url}`
+    description: `${searchType} ${highlightMatch(formatBookmarkForDisplay(bookmark.title), text)} - ${highlightMatch(bookmark.url, text)}`
   })));
 });
 
@@ -117,6 +117,21 @@ function getSearchTypeEmoji(query) {
   
   // Default search (title + URL)
   return '🔍';
+}
+
+function highlightMatch(text, query) {
+  if (!query || query.length < 2) return text;
+  
+  let searchQuery = query.toLowerCase();
+  
+  // For prefix searches (f/d/p), extract the actual search term
+  if ((searchQuery.startsWith('f') || searchQuery.startsWith('d') || searchQuery.startsWith('p')) && searchQuery.length > 1) {
+    searchQuery = searchQuery.substring(1);
+  }
+  
+  // Find and highlight matches with UPPERCASE
+  const regex = new RegExp(`(${searchQuery.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+  return text.replace(regex, (match) => match.toUpperCase());
 }
 
 function searchBookmarks(query) {
