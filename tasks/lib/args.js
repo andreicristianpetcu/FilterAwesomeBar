@@ -1,7 +1,6 @@
-import yargs from 'yargs'
-import { hideBin } from 'yargs/helpers'
+const yargs = require('yargs')
 
-const args = yargs(hideBin(process.argv))
+const args = yargs
 
   .option('production', {
     boolean: true,
@@ -40,4 +39,4 @@ if (typeof args.sourcemaps === 'undefined') {
   args.sourcemaps = !args.production
 }
 
-export default args
+module.exports = args

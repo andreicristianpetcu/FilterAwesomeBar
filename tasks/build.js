@@ -1,6 +1,6 @@
-import gulp from 'gulp'
+const gulp = require('gulp')
 
-gulp.task('build', gulp.series(
+gulp.task('build', [
   'clean',
   'manifest',
   'scripts',
@@ -10,4 +10,4 @@ gulp.task('build', gulp.series(
   'images',
   'fonts',
   'chromereload'
-))
+])

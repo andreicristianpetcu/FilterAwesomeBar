@@ -1,7 +1,8 @@
-import gulp from 'gulp'
-import gutil from 'gulp-util'
-import livereload from 'gulp-livereload'
-import args from './lib/args'
+const gulp = require('gulp')
+const log = require('fancy-log')
+const colors = require('ansi-colors')
+const livereload = require('gulp-livereload')
+const args = require('./lib/args')
 
 // In order to make chromereload work you'll need to include
 // the following line in your `scipts/background.js` file.
@@ -27,7 +28,7 @@ gulp.task('chromereload', (cb) => {
     quiet: !args.verbose
   })
 
-  gutil.log('Starting', gutil.colors.cyan('\'livereload-server\''))
+  log('Starting', colors.cyan('\'livereload-server\''))
 
   // The watching for javascript files is done by webpack
   // Check out ./tasks/scripts.js for further info.

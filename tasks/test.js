@@ -1,7 +1,7 @@
-import gulp from 'gulp'
-import del from 'del'
-import args from './lib/args'
-import karma from 'karma';
+const gulp = require('gulp')
+const del = require('del')
+const args = require('./lib/args')
+const karma = require('karma');
 var Server = karma.Server;
 
 gulp.task('test', function (done) {

@@ -1,12 +1,14 @@
-import gulp from 'gulp'
-import gulpif from 'gulp-if'
-import { log, colors } from 'gulp-util'
-import named from 'vinyl-named'
-import webpack from 'webpack'
-import gulpWebpack from 'webpack-stream'
-import plumber from 'gulp-plumber'
-import livereload from 'gulp-livereload'
-import args from './lib/args'
+const gulp = require('gulp')
+const gulpif = require('gulp-if')
+const log = require('fancy-log')
+const colors = require('ansi-colors')
+const named = require('vinyl-named')
+const webpack = require('webpack')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const gulpWebpack = require('webpack-stream')
+const plumber = require('gulp-plumber')
+const livereload = require('gulp-livereload')
+const args = require('./lib/args')
 
 const ENV = args.production ? 'production' : 'development'
 
@@ -26,7 +28,7 @@ gulp.task('scripts', (cb) => {
           'process.env.VENDOR': JSON.stringify(args.vendor)
         })
       ].concat(args.production ? [
-        new webpack.optimize.UglifyJsPlugin()
+        new UglifyJsPlugin()
       ] : []),
       module: {
         rules: [{
