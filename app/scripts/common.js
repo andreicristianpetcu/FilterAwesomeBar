@@ -189,7 +189,8 @@ function revertBookmarks(){
 }
 
 function runInBackground() {
-    chrome.action.onClicked.addListener(revertBookmarks);
+    const actionAPI = chrome.action || chrome.browserAction;
+    actionAPI.onClicked.addListener(revertBookmarks);
 
     chrome.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
     chrome.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);

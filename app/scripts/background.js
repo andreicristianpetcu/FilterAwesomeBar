@@ -1,7 +1,8 @@
 // Enable chromereload by uncommenting this line:
 // import 'chromereload/devonly'
 
-import './common.js';
+// For Manifest V2 compatibility, common.js functions are available globally
+// import './common.js';
 
 let bookmarkCache = [];
 let reverting = false;
@@ -13,7 +14,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 // Handle browser action clicks (toggle bookmark suffixes)
-chrome.action.onClicked.addListener(() => {
+// Use chrome.action for Manifest V3 (Chrome) or chrome.browserAction for Manifest V2 (Firefox)
+const actionAPI = chrome.action || chrome.browserAction;
+actionAPI.onClicked.addListener(() => {
   revertBookmarks();
 });
 
