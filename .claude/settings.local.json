@@ -27,7 +27,8 @@
       "Bash(./npm-old.sh install --save-dev webpack@4.46.0)",
       "Bash(./gulp-old.sh clean:*)",
       "Bash(./gulp-old.sh build --production --vendor=firefox)",
-      "Bash(./npm-old.sh install --save-dev babel-loader@8.3.0)"
+      "Bash(./npm-old.sh install --save-dev babel-loader@8.3.0)",
+      "Bash(unzip:*)"
     ],
     "deny": [],
     "ask": []
