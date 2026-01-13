@@ -1,12 +1,13 @@
-import gulp from 'gulp'
-import gulpif from 'gulp-if'
-import gutil from 'gulp-util'
-import sourcemaps from 'gulp-sourcemaps'
-import less from 'gulp-less'
-import sass from 'gulp-sass'
-import cleanCSS from 'gulp-clean-css'
-import livereload from 'gulp-livereload'
-import args from './lib/args'
+const gulp = require('gulp')
+const gulpif = require('gulp-if')
+const log = require('fancy-log')
+const colors = require('ansi-colors')
+const sourcemaps = require('gulp-sourcemaps')
+const less = require('gulp-less')
+const sass = require('gulp-sass')(require('node-sass'))
+const cleanCSS = require('gulp-clean-css')
+const livereload = require('gulp-livereload')
+const args = require('./lib/args')
 
 gulp.task('styles:css', function () {
   return gulp.src('app/styles/*.css')
@@ -21,7 +22,7 @@ gulp.task('styles:less', function () {
   return gulp.src('app/styles/*.less')
     .pipe(gulpif(args.sourcemaps, sourcemaps.init()))
     .pipe(less({ paths: ['./app'] }).on('error', function (error) {
-      gutil.log(gutil.colors.red('Error (' + error.plugin + '): ' + error.message))
+      log(colors.red('Error (' + error.plugin + '): ' + error.message))
       this.emit('end')
     }))
     .pipe(gulpif(args.production, cleanCSS()))
@@ -34,7 +35,7 @@ gulp.task('styles:sass', function () {
   return gulp.src('app/styles/*.scss')
     .pipe(gulpif(args.sourcemaps, sourcemaps.init()))
     .pipe(sass({ includePaths: ['./app'] }).on('error', function (error) {
-      gutil.log(gutil.colors.red('Error (' + error.plugin + '): ' + error.message))
+      log(colors.red('Error (' + error.plugin + '): ' + error.message))
       this.emit('end')
     }))
     .pipe(gulpif(args.production, cleanCSS()))

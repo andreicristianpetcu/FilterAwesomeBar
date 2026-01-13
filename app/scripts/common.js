@@ -88,7 +88,7 @@ function crawlParentTitles(parentId, previousParents) {
     if(typeof parentId === 'undefined' || typeof previousParents === 'undefined'){
         previousParents = [];
     }
-    return browser.bookmarks.get(parentId).then(function(foundBookmarks) {
+    return chrome.bookmarks.get(parentId).then(function(foundBookmarks) {
         const foundBookmark = foundBookmarks[0];
         const bookmarkTitle = getBookmarkTitle(foundBookmark);
         if(bookmarkTitle !== ''){
@@ -103,7 +103,7 @@ function crawlParentTitles(parentId, previousParents) {
 }
 
 function findBookmarkFromTree(bookmarkId){
-    return browser.bookmarks.getSubTree(bookmarkId);
+    return chrome.bookmarks.getSubTree(bookmarkId);
 }
 
 function findBookmarkFromTreeWithItems(bookmarkId, bookmarksToFindIn){
@@ -140,7 +140,7 @@ function fetchAndReprocessBookmark(bookmarkId) {
 function reprocessBookmark(oldBookmarkData) {
     var newBookmarkData = generateNewBookmarkData(oldBookmarkData);
     if(oldBookmarkData.oldTitle !== newBookmarkData.newTitle && !newBookmarkData.newTitle.startsWith(separator)){
-        browser.bookmarks.update(newBookmarkData.id, {
+        chrome.bookmarks.update(newBookmarkData.id, {
             title: newBookmarkData.newTitle
         });
     }
@@ -154,7 +154,7 @@ function processBookmarksTreeBookmarks(bookmarksTree) {
 }
 
 function processAllBookmarks() {
-    return browser.bookmarks.getTree().then(function (bookmarksTree) {
+    return chrome.bookmarks.getTree().then(function (bookmarksTree) {
         return processBookmarksTreeBookmarks(bookmarksTree);
     });
 }
@@ -175,10 +175,10 @@ var reverting = false;
 function revertBookmarks(){
     reverting = !reverting;
     if(reverting){
-        browser.bookmarks.getTree().then(function (bookmarksTree) {
+        chrome.bookmarks.getTree().then(function (bookmarksTree) {
             var allBookmarksList = getBookmarksTreeAsList(bookmarksTree);
             allBookmarksList.forEach(function (bookmark) {
-                browser.bookmarks.update(bookmark.id, {
+                chrome.bookmarks.update(bookmark.id, {
                     title: bookmark.title.split(separator)[0]
                 });
             });
@@ -189,19 +189,35 @@ function revertBookmarks(){
 }
 
 function runInBackground() {
-    browser.browserAction.onClicked.addListener(revertBookmarks);
+    const actionAPI = chrome.action || chrome.browserAction;
+    actionAPI.onClicked.addListener(revertBookmarks);
 
-    browser.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
-    browser.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
-    browser.bookmarks.onChanged.addListener(fetchAndReprocessBookmark);
+    chrome.bookmarks.onCreated.addListener(fetchAndReprocessBookmark);
+    chrome.bookmarks.onMoved.addListener(fetchAndReprocessBookmark);
+    chrome.bookmarks.onChanged.addListener(fetchAndReprocessBookmark);
 
-    return browser.runtime.onInstalled.addListener(processAllBookmarks);
+    return chrome.runtime.onInstalled.addListener(processAllBookmarks);
 }
 
-window.extractBookmarks = extractBookmarks;
-window.shouldProcessBookmark = shouldProcessBookmark;
-window.generateNewBookmarkData = generateNewBookmarkData;
-window.runInBackground = runInBackground;
-window.processAllBookmarks = processAllBookmarks;
-window.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
-window.separator = separator;
+// Export functions for use in background.js
+if (typeof window !== 'undefined') {
+    window.extractBookmarks = extractBookmarks;
+    window.shouldProcessBookmark = shouldProcessBookmark;
+    window.generateNewBookmarkData = generateNewBookmarkData;
+    window.runInBackground = runInBackground;
+    window.processAllBookmarks = processAllBookmarks;
+    window.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
+    window.separator = separator;
+}
+
+// Make functions globally available for background.js
+globalThis.extractBookmarks = extractBookmarks;
+globalThis.shouldProcessBookmark = shouldProcessBookmark;
+globalThis.generateNewBookmarkData = generateNewBookmarkData;
+globalThis.runInBackground = runInBackground;
+globalThis.processAllBookmarks = processAllBookmarks;
+globalThis.processBookmarksTreeBookmarks = processBookmarksTreeBookmarks;
+globalThis.separator = separator;
+globalThis.getBookmarkTitle = getBookmarkTitle;
+globalThis.crawlParentTitles = crawlParentTitles;
+globalThis.getBookmarksTreeAsList = getBookmarksTreeAsList;

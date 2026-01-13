@@ -3,7 +3,8 @@
   "short_name": "__MSG_appShortName__",
   "description": "__MSG_appDescription__",
   "version": "1.2.1",
-  "manifest_version": 2,
+  "__chrome__manifest_version": 3,
+  "__firefox__manifest_version": 2,
   "default_locale": "en",
   "icons": {
     "16": "images/icons/icon-16.png",
@@ -13,16 +14,24 @@
     "96": "images/icons/icon-96.png",
     "128": "images/icons/icon-128.png"
   },
-  "browser_action": {
+  "__chrome__action": {
     "default_icon": "images/icons/icon-128.png",
-    "default_title": "Toggle bookmark suffixes",
-    "default_area": "navbar"
+    "default_title": "Toggle bookmark suffixes"
   },
-  "background": {
-    "scripts": [
-      "scripts/common.js",
-      "scripts/background.js"
-    ]
+  "__firefox__browser_action": {
+    "default_icon": "images/icons/icon-128.png",
+    "default_title": "Toggle bookmark suffixes"
+  },
+  "__chrome__background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "__firefox__background": {
+    "scripts": ["scripts/common.js", "scripts/background.js"],
+    "persistent": false
+  },
+  "omnibox": {
+    "keyword": "bm"
   },
   "permissions": [
     "bookmarks"
